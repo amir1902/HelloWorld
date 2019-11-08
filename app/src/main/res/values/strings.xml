@@ -3,4 +3,5 @@
     <string name="call_message">Enter a number to call</string>
     <string name="button_call">Call</string>
     <string name="button_display">Display</string>
+    <string name="no_permissions">No Permissions</string>
 </resources>
