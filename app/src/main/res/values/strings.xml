@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">HelloWorld</string>
+    <string name="call_message">Enter a number to call</string>
+    <string name="button_send">Call</string>
 </resources>
