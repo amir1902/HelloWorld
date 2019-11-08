@@ -1,4 +1,4 @@
-package com.example.helloworld
+package com.shajafamir.helloworld222
 
 import org.junit.Test
 
