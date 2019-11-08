@@ -67,21 +67,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(callIntent)
         }
     }
-    /**
-    ﻿override fun onRequestPermissionsResult(requestCode: Int,
-                                             permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            CALL_REQUEST_CODE -> {
-
-                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-
-                    Log.i(TAG, "Permission has been denied by user")
-                } else {
-                    Log.i(TAG, "Permission has been granted by user")
-                }
-            }
-        }
-    }﻿*/
-
-
 }
