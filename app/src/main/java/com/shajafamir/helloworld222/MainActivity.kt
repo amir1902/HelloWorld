@@ -26,10 +26,18 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "PermissionDemo"
     private val CALL_REQUEST_CODE = 101
+    private val requestRecieveSms = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+        != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.RECEIVE_SMS),
+                requestRecieveSms)
+        }
     }
 
     /** Called when the user taps the Send button */
@@ -74,4 +82,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }﻿*/
+
+
 }
