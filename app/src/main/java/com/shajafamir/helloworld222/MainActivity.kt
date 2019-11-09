@@ -26,30 +26,34 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "PermissionDemo"
     private val CALL_REQUEST_CODE = 101
-    private val requestRecieveSms = 2
+    private val requestUserPermission = 2
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
-        != PackageManager.PERMISSION_GRANTED) {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ANSWER_PHONE_CALLS)
+            != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.RECEIVE_SMS),
-                requestRecieveSms)
+                arrayOf(
+                    Manifest.permission.ANSWER_PHONE_CALLS,
+                    Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.CALL_PHONE
+                ), requestUserPermission)
         }
-    }
 
-    /** Called when the user taps the Send button */
-    fun sendMessage(view: View) {
-        val editText = findViewById<EditText>(R.id.editText)
-            val message = editText.text.toString()
-        val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-            putExtra(EXTRA_MESSAGE, message)
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
+            != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(
+                    Manifest.permission.ANSWER_PHONE_CALLS,
+                    Manifest.permission.RECEIVE_SMS,
+                    Manifest.permission.CALL_PHONE
+                ), requestUserPermission)
         }
-        startActivity(intent)
-    }
 
+    }
     /** Called when user taps lower button */
     fun dialContactPhone(view: View) {
         val editText = findViewById<EditText>(R.id.editText)

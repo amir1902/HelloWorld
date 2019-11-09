@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.ContextCompat.startActivity
 import android.R.attr.phoneNumber
 import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 
@@ -43,11 +44,21 @@ class SmsReceiver : BroadcastReceiver() {
                 ).show()
             }
 
+            Toast.makeText(context,"Trying to call", Toast.LENGTH_SHORT).show()
+
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(context,"There are permissions", Toast.LENGTH_SHORT).show()
                 val callIntent = Intent(Intent.ACTION_CALL)
                 callIntent.data = Uri.parse("tel:$messageText")
                 callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(callIntent)
+            } else {
+                val permStatus = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
+                Toast.makeText(
+                    context,
+                    "Permission status is $permStatus",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
