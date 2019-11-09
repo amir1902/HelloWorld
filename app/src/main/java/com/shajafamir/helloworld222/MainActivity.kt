@@ -60,22 +60,22 @@ class MainActivity : AppCompatActivity() {
 
     }
     /** Called when user taps lower button */
-    fun dialContactPhone(view: View) {
-        val editText = findViewById<EditText>(R.id.editText)
-        val phoneNumber = editText.text.toString()
-        //startActivity(Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)))
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-            //val noPermIntent = Intent(this, DisplayNoPermissionsActivity::class.java).apply {}
-            //startActivity(noPermIntent)
-            Log.i(TAG, "Permission to record denied")
-            ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.CALL_PHONE),  CALL_REQUEST_CODE)
-        } else {
-            val callIntent =
-                Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneNumber, null)).apply {}
-            startActivity(callIntent)
-        }
-    }
+//    fun dialContactPhone(view: View) {
+//        val editText = findViewById<EditText>(R.id.editText)
+//        val phoneNumber = editText.text.toString()
+//        //startActivity(Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phoneNumber, null)))
+//
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+//            //val noPermIntent = Intent(this, DisplayNoPermissionsActivity::class.java).apply {}
+//            //startActivity(noPermIntent)
+//            Log.i(TAG, "Permission to record denied")
+//            ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.CALL_PHONE),  CALL_REQUEST_CODE)
+//        } else {
+//            val callIntent =
+//                Intent(Intent.ACTION_CALL, Uri.fromParts("tel", phoneNumber, null)).apply {}
+//            startActivity(callIntent)
+//        }
+//    }
 
     fun saveGateNumber(view: View) {
         val editText = findViewById<EditText>(R.id.editText4)
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         val gateNumber = sharedPreference.getValueString("gateNumber")
 
         setContentView(R.layout.activity_main)
-        val textView = findViewById<TextView>(R.id.gateNumberView)
+        val textView = findViewById<TextView>(R.id.editText4)
         textView.text = gateNumber
         println(gateNumber)
 
@@ -113,6 +113,23 @@ class MainActivity : AppCompatActivity() {
         } else {
             sharedPreference.save(name, number)
         }
+
+    }
+
+    fun displayGuestList(view: View) {
+        val sharedPreference:SharedPreference=SharedPreference(this)
+        val sharedPreferences = this.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val sharedPreferenceIds = sharedPreferences.all.map { it.key } //returns List<String>
+        var textToShow = ""
+        for (i in 0..sharedPreferenceIds.size-1) {
+            textToShow += sharedPreferenceIds[i]
+            textToShow += " "
+            textToShow += sharedPreference.getValueString(sharedPreferenceIds[i])
+            textToShow += " \n"
+        }
+        setContentView(R.layout.activity_main)
+        val textView = findViewById<TextView>(R.id.guestListView)
+        textView.text = textToShow
 
     }
 }
