@@ -116,10 +116,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun removeGuest(view: View) {
+        val editText1 = findViewById<EditText>(R.id.approvedName)
+        val name = editText1.text.toString()
+        val editText2 = findViewById<EditText>(R.id.approvedNumber)
+        val number = editText2.text.toString()
+        val sharedPreference: SharedPreference = SharedPreference(this)
+        val sharedPreferences = this.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val sharedPreferenceIds = sharedPreferences.all.map { it.key } //returns List<String>
+        if (name in sharedPreferenceIds) {
+            if(!(name == "gateNumber")){
+                sharedPreference.removeValue(name)
+            }
+        }
+
+    }
+
     fun displayGuestList(view: View) {
         val sharedPreference:SharedPreference=SharedPreference(this)
         val sharedPreferences = this.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val sharedPreferenceIds = sharedPreferences.all.map { it.key } //returns List<String>
+        val sharedPreferenceVals = sharedPreferences.all.map { it.value } //returns List<String>
         var textToShow = ""
         for (i in 0..sharedPreferenceIds.size-1) {
             textToShow += sharedPreferenceIds[i]

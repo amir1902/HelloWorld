@@ -24,6 +24,7 @@ class SmsReceiver : BroadcastReceiver() {
         val extras = intent.extras
         var phoneNumber = ""
         var messageText = ""
+        val PREFS_NAME = "kotlincodes"
 
         if(extras != null){
             val sms = extras.get("pdus") as Array<Any>
@@ -44,12 +45,28 @@ class SmsReceiver : BroadcastReceiver() {
                 ).show()
             }
 
+            val sharedPreference:SharedPreference=SharedPreference(context)
+            val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val sharedPreferenceIds = sharedPreferences.all.map { it.key } //returns List<String>
+            val sharedPreferenceVals = sharedPreferences.all.map { it.value } //returns List<String>
+            if(!(phoneNumber in sharedPreferenceVals)) {
+                Toast.makeText(context,"Phone not in guest list", Toast.LENGTH_SHORT).show()
+                return
+            }
+            val allowedCodeWords = listOf("gate", "Gate", "Shar", "Shaar", "mellon", "Mellon", "shar",
+                "shaar")
+
+            if(!(messageText in allowedCodeWords)) {
+                Toast.makeText(context,"Message not approved", Toast.LENGTH_SHORT).show()
+                return
+            }
+            val gateNumber = sharedPreference.getValueString("gateNumber")
             Toast.makeText(context,"Trying to call", Toast.LENGTH_SHORT).show()
 
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(context,"There are permissions", Toast.LENGTH_SHORT).show()
                 val callIntent = Intent(Intent.ACTION_CALL)
-                callIntent.data = Uri.parse("tel:$messageText")
+                callIntent.data = Uri.parse("tel:$gateNumber")
                 callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(callIntent)
             } else {
