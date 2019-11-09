@@ -37,12 +37,12 @@ class SmsReceiver : BroadcastReceiver() {
                 }
                 phoneNumber = smsMessage.originatingAddress.toString()
                 messageText = smsMessage.messageBody.toString()
-                Toast.makeText(
+                /**Toast.makeText(
                     context,
                     "phoneNumber: $phoneNumber\n" +
                             "messageText: $messageText",
                     Toast.LENGTH_SHORT
-                ).show()
+                ).show()*/
             }
 
             val sharedPreference:SharedPreference=SharedPreference(context)
@@ -50,7 +50,7 @@ class SmsReceiver : BroadcastReceiver() {
             val sharedPreferenceIds = sharedPreferences.all.map { it.key } //returns List<String>
             val sharedPreferenceVals = sharedPreferences.all.map { it.value } //returns List<String>
             if(!(phoneNumber in sharedPreferenceVals)) {
-                Toast.makeText(context,"Phone not in guest list", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context,"Phone not in guest list", Toast.LENGTH_SHORT).show()
                 return
             }
             val allowedCodeWords = listOf("gate", "Gate", "Shar", "Shaar", "mellon", "Mellon", "shar",
@@ -61,21 +61,14 @@ class SmsReceiver : BroadcastReceiver() {
                 return
             }
             val gateNumber = sharedPreference.getValueString("gateNumber")
-            Toast.makeText(context,"Trying to call", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context,"Trying to call", Toast.LENGTH_SHORT).show()
 
             if (ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(context,"There are permissions", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context,"There are permissions", Toast.LENGTH_SHORT).show()
                 val callIntent = Intent(Intent.ACTION_CALL)
                 callIntent.data = Uri.parse("tel:$gateNumber")
                 callIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(callIntent)
-            } else {
-                val permStatus = ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
-                Toast.makeText(
-                    context,
-                    "Permission status is $permStatus",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
