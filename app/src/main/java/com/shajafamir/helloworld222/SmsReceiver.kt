@@ -57,7 +57,7 @@ class SmsReceiver : BroadcastReceiver() {
                 "shaar")
 
             if(!(messageText in allowedCodeWords)) {
-                Toast.makeText(context,"Message not approved", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"Message not approved. Send 'mellon' or 'gate'", Toast.LENGTH_SHORT).show()
                 return
             }
             val gateNumber = sharedPreference.getValueString("gateNumber")
