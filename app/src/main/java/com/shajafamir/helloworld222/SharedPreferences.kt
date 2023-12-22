@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 /**
- * Created by Kolincodes on 10/05/2018.
+ * Created by Kolincodes on 10/05/2023.
  */
 
 class SharedPreference(val context: Context) {
